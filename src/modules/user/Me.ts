@@ -26,7 +26,10 @@ export class MeResolver {
   }
 
   @FieldResolver()
-  email(@Root() _parent: User, @Arg("email") email: string) {
+  email(
+    @Root() parent: User,
+    @Arg("email", { nullable: true }) email: string = parent.email
+  ) {
     return email;
   }
 }
