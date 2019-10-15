@@ -10,7 +10,6 @@ import { createSchema } from "./utils/createSchema";
 import { redis } from "./redis";
 import helmet from "helmet";
 import HlsApi from "./routes/HlsApi";
-import { corsOptions } from "./cors";
 import bodyParser = require("body-parser");
 
 const main = async () => {
@@ -28,11 +27,16 @@ const main = async () => {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
-  app.use("/hls-api", HlsApi);
+  app.use("/api", HlsApi);
 
   const RedisStore = connectRedis(session);
 
-  app.use(cors(corsOptions));
+  app.use(
+    cors({
+      credentials: true,
+      origin: process.env.DOMAIN_NAME
+    })
+  );
   app.use(helmet());
 
   app.use(
@@ -47,11 +51,13 @@ const main = async () => {
     } as any)
   );
 
-  apolloServer.applyMiddleware({ app, cors: corsOptions });
+  apolloServer.applyMiddleware({ app });
 
   app.listen(process.env.PORT, () => {
     console.log(
-      `Server started on http://localhost:${process.env.PORT}/graphql`
+      `Server started on http://${process.env.DOMAIN_NAME}:${
+        process.env.PORT
+      }/graphql`
     );
   });
 };

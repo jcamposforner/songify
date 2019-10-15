@@ -1,4 +1,12 @@
-import { Resolver, Query, Ctx, UseMiddleware } from "type-graphql";
+import {
+  Resolver,
+  Query,
+  Ctx,
+  UseMiddleware,
+  FieldResolver,
+  Root,
+  Arg
+} from "type-graphql";
 import { RequestContext } from "../types/RequestContext";
 import { User } from "../../entity/User";
 import { isAuth } from "../middleware/isAuth";
@@ -15,5 +23,10 @@ export class MeResolver {
     const userJwt: number = ctx.req.session!.userId;
 
     return User.findOne(userJwt);
+  }
+
+  @FieldResolver()
+  email(@Root() _parent: User, @Arg("email") email: string) {
+    return email;
   }
 }
