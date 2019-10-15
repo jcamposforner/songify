@@ -3,8 +3,8 @@ import { redis } from "../../redis";
 import { confirmationUserPrefix } from "../constants/redisPrefixes";
 
 export const createConfirmationUrl = async (userId: number) => {
-    const token = v4();
-    redis.set(confirmationUserPrefix + token, userId, "ex", 60 * 60 * 24); // 1 day
+  const token = v4();
+  redis.set(confirmationUserPrefix + token, userId, "ex", 60 * 60 * 24); // 1 day
 
-    return `http://localhost:3000/user/confirm/${token}`;
+  return `http://localhost:3000/user/confirm/${token}`;
 };
