@@ -7,3 +7,4 @@ tmp/
 temp/
 images/
 dist/
+ormconfig.json
