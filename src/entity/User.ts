@@ -41,12 +41,12 @@ export class User extends BaseEntity {
   password: string;
 
   @Field(() => Photo, { nullable: true })
-  @OneToMany(() => Photo, photo => photo.user, { nullable: true })
-  photos: Photo[];
+  @OneToMany(() => Photo, photo => photo.user, { nullable: true, lazy: true })
+  photos: Promise<Photo[]>;
 
   @Field(() => Video, { nullable: true })
-  @OneToMany(() => Video, video => video.user, { nullable: true })
-  videos: Photo[];
+  @OneToMany(() => Video, video => video.user, { nullable: true, lazy: true })
+  videos: Promise<Video[]>;
 
   @OneToOne(() => Photo, { nullable: true })
   @JoinColumn()
