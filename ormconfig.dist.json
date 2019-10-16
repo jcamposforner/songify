@@ -14,5 +14,12 @@
     "entitiesDir": "src/entity",
     "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
+  },
+  "cache": {
+    "type": "redis",
+    "options": {
+      "host": "localhost",
+      "port": 6379
+    }
   }
 }
